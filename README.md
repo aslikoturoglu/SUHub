@@ -34,8 +34,8 @@ This category highlights both university-organized and student-led events, inclu
 | Name | Student ID | Role |
 |----------|----------|----------|
 | Tolga Demirayak | 30812 | Project Coordinator |
-| İsmet Tolga Yılmaz | 32032 | Member |
-| Emre Törehan Törer | 32216 | Member |
-| Korcan Baykal | 32225 | Member |
-| Aslı Koturoğlu | 32363 | Member |
-| Işık Giray Önal | 34088 | Member |
+| İsmet Tolga Yılmaz | 32032 | Testing & Quality Assurance Lead |
+| Emre Törehan Törer | 32216 | Presentation & Communication Lead |
+| Korcan Baykal | 32225 | Learning & Research Lead |
+| Aslı Koturoğlu | 32363 | Documentation & Submission Lead |
+| Işık Giray Önal | 34088 | I​​ntegration & Repository Lead |
