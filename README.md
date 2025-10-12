@@ -9,7 +9,7 @@ The problem the app aims to solve is the lack of a centralized and student-orien
 **_1. Academic Courses_** <br> 
 This section allows students to share feedback and reviews about the courses offered at Sabancı University. Users can discuss course content, workload, grading system, and teaching quality, helping others make informed decisions during course registration.
 
-2. Student Clubs <br>
+**_2. Student Clubs_** <br>
 Students can explore and review various student clubs and organizations. Members and participants may comment on club activities, community engagement, and the overall experience of being involved in extracurricular life.
 
 3. Campus Facilities <br>
