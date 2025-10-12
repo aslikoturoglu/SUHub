@@ -6,8 +6,8 @@ Our project is a community-based feedback and discussion platform designed speci
 The problem the app aims to solve is the lack of a centralized and student-oriented platform where experiences and feedback about the university can be easily shared and accessed. Many students struggle to find accurate information about courses, or campus life before making important decisions. Our platform fills this gap by providing a trustworthy, student-driven source of information and discussion. Through the application, students will be able to post comments, ask questions, and provide reviews on a wide range of categories such as academic courses, student clubs, campus facilities, dormitories, dining options, social activities, events, and other aspects of student life. All in all, the project aims to create a hybrid system that promotes open dialogue, honest feedback, and knowledge sharing among the university community.
 
 ## Categories and Descriptions
-<u> 1. Academic Courses </u> <br>
-This section allows students to share feedback and reviews about the courses offered at Sabancı University. Users can discuss course content, workload, grading system, and teaching quality, helping others make informed decisions during course registration.
+<u> 1. Academic Courses 
+<br> This section allows students to share feedback and reviews about the courses offered at Sabancı University. Users can discuss course content, workload, grading system, and teaching quality, helping others make informed decisions during course registration.
 
 2. Student Clubs <br>
 Students can explore and review various student clubs and organizations. Members and participants may comment on club activities, community engagement, and the overall experience of being involved in extracurricular life.
