@@ -6,25 +6,25 @@ Our project is a community-based feedback and discussion platform designed speci
 The problem the app aims to solve is the lack of a centralized and student-oriented platform where experiences and feedback about the university can be easily shared and accessed. Many students struggle to find accurate information about courses, or campus life before making important decisions. Our platform fills this gap by providing a trustworthy, student-driven source of information and discussion. Through the application, students will be able to post comments, ask questions, and provide reviews on a wide range of categories such as academic courses, student clubs, campus facilities, dormitories, dining options, social activities, events, and other aspects of student life. All in all, the project aims to create a hybrid system that promotes open dialogue, honest feedback, and knowledge sharing among the university community.
 
 ## Categories and Descriptions
-1. Academic Courses <br>
+<u>text</u>1. Academic Courses <br>
 This section allows students to share feedback and reviews about the courses offered at Sabancı University. Users can discuss course content, workload, grading system, and teaching quality, helping others make informed decisions during course registration.
 
-2. Student Clubs
+2. Student Clubs <br>
 Students can explore and review various student clubs and organizations. Members and participants may comment on club activities, community engagement, and the overall experience of being involved in extracurricular life.
 
-3. Campus Facilities
+3. Campus Facilities <br>
 This category focuses on the physical and service-related aspects of the campus, including libraries, study areas, gyms, laboratories, and transportation services. Students can evaluate the quality, accessibility, and functionality of these facilities.
 
-4. Dormitories
+4. Dormitories <br>
 Users can post reviews about the on-campus housing options. Topics may include room conditions, cleanliness, roommate experiences, social environment, and proximity to key campus locations.
 
-5. Dining Options
+5. Dining Options <br>
 This section covers food services such as cafeterias, restaurants, and cafes on campus. Students can provide opinions about meal quality, pricing, hygiene, and variety to guide others in choosing where to eat.
 
-6. Social Activities
+6. Social Activities <br>
 Students can discuss informal social gatherings, hobbies, and leisure opportunities that contribute to campus life beyond academics. This section aims to promote social engagement and community building.
 
-7. Events
+7. Events <br>
 This category highlights both university-organized and student-led events, including seminars, concerts, workshops, and cultural activities. Users can share experiences and recommendations for future participants.
 
 ## Group Members
