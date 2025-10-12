@@ -1,6 +1,6 @@
 # CS310 Mobile Application: SUHub
 ## Description
-
+Our project is a community-based feedback and discussion platform designed specifically for Sabancı University students. The application allows users to share opinions, experiences, and reviews about different aspects of university life — including courses, dining options, dormitories, and campus facilities. The app combines the idea of open discussion and anonymous feedback to create an engaging, interactive, and informative space within the university community.
 
 ## Main Purpose
 
