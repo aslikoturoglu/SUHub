@@ -12,19 +12,19 @@ This section allows students to share feedback and reviews about the courses off
 **_2. Student Clubs_** <br>
 Students can explore and review various student clubs and organizations. Members and participants may comment on club activities, community engagement, and the overall experience of being involved in extracurricular life.
 
-3. Campus Facilities <br>
+**_3. Campus Facilities_** <br>
 This category focuses on the physical and service-related aspects of the campus, including libraries, study areas, gyms, laboratories, and transportation services. Students can evaluate the quality, accessibility, and functionality of these facilities.
 
-4. Dormitories <br>
+**_4. Dormitories_** <br>
 Users can post reviews about the on-campus housing options. Topics may include room conditions, cleanliness, roommate experiences, social environment, and proximity to key campus locations.
 
-5. Dining Options <br>
+**_5. Dining Options_** <br>
 This section covers food services such as cafeterias, restaurants, and cafes on campus. Students can provide opinions about meal quality, pricing, hygiene, and variety to guide others in choosing where to eat.
 
-6. Social Activities <br>
+**_6. Social Activities_** <br>
 Students can discuss informal social gatherings, hobbies, and leisure opportunities that contribute to campus life beyond academics. This section aims to promote social engagement and community building.
 
-7. Events <br>
+**_7. Events_** <br>
 This category highlights both university-organized and student-led events, including seminars, concerts, workshops, and cultural activities. Users can share experiences and recommendations for future participants.
 
 ## Group Members
