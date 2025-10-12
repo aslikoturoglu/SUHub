@@ -8,7 +8,7 @@ The problem the app aims to solve is the lack of a centralized and student-orien
 ## Group Members
 | Name | Student ID | Role |
 |----------|----------|----------|
-| Tolga Demirayak | 30812 | Project Coordinator |
+| Yaşar Tolga Demirayak | 30812 | Project Coordinator |
 | İsmet Tolga Yılmaz | 32032 | Member |
 | Emre Törehan Törer | 32216 | Member |
 | Korcan Baykal | 32225 | Member |
