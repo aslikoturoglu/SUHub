@@ -5,6 +5,7 @@ Our project is a community-based feedback and discussion platform designed speci
 ## Main Purpose & The Problem to Solve
 The problem the app aims to solve is the lack of a centralized and student-oriented platform where experiences and feedback about the university can be easily shared and accessed. Many students struggle to find accurate information about courses, or campus life before making important decisions. Our platform fills this gap by providing a trustworthy, student-driven source of information and discussion. Through the application, students will be able to post comments, ask questions, and provide reviews on a wide range of categories such as academic courses, student clubs, campus facilities, dormitories, dining options, social activities, events, and other aspects of student life. 
 <br>
+<br>
 All in all, the project aims to create a hybrid system that promotes open dialogue, honest feedback, and knowledge sharing among the university community. To ensure students feel comfortable expressing their opinions, the platform allows users to share their thoughts and experiences anonymously. This anonymity encourages open and honest communication while protecting users’ identities and ensuring a safe environment for everyone.
 
 ## Categories and Descriptions
