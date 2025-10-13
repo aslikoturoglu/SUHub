@@ -12,22 +12,25 @@ All in all, the project aims to create a hybrid system that promotes open dialog
 **_1. Academic Courses_** <br> 
 This section allows students to share feedback and reviews about the courses offered at Sabancı University. Users can discuss course content, workload, grading system, and teaching quality, helping others make informed decisions during course registration.
 
-**_2. Student Clubs_** <br>
-Students can explore and review various student clubs and organizations. Members and participants may comment on club activities, community engagement, and the overall experience of being involved in extracurricular life.
+**_2. Dining Options_** <br>
+This section covers food services such as cafeterias, restaurants, and cafes on campus. Students can provide opinions about meal quality, pricing, hygiene, and variety to guide others in choosing where to eat.
 
-**_3. Campus Facilities_** <br>
-This category focuses on the physical and service-related aspects of the campus, including libraries, study areas, gyms, laboratories, and transportation services. Students can evaluate the quality, accessibility, and functionality of these facilities.
+**_3. Transportation Services_** <br>
+This section is dedicated to reviews and discussions about the university’s shuttle service, which is the primary transportation option for students commuting to and from Sabancı University. Users can share their opinions on aspects such as punctuality, comfort, safety, and overall service quality.
 
 **_4. Dormitories_** <br>
 Users can post reviews about the on-campus housing options. Topics may include room conditions, cleanliness, roommate experiences, social environment, and proximity to key campus locations.
 
-**_5. Dining Options_** <br>
-This section covers food services such as cafeterias, restaurants, and cafes on campus. Students can provide opinions about meal quality, pricing, hygiene, and variety to guide others in choosing where to eat.
+**_5. Student Clubs_** <br>
+Students can explore and review various student clubs and organizations. Members and participants may comment on club activities, community engagement, and the overall experience of being involved in extracurricular life.
 
-**_6. Social Activities_** <br>
+**_6. Campus Facilities_** <br>
+This category focuses on the physical and service-related aspects of the campus, including libraries, study areas, gyms, laboratories, and transportation services. Students can evaluate the quality, accessibility, and functionality of these facilities.
+
+**_7. Social Activities_** <br>
 Students can discuss informal social gatherings, hobbies, and leisure opportunities that contribute to campus life beyond academics. This section aims to promote social engagement and community building.
 
-**_7. Events_** <br>
+**_8. Events_** <br>
 This category highlights both university-organized and student-led events, including seminars, concerts, workshops, and cultural activities. Users can share experiences and recommendations for future participants.
 
 ## Group Members
