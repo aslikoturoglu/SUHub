@@ -16,7 +16,7 @@ This section allows students to share feedback and reviews about the courses off
 This section covers food services such as cafeterias, restaurants, and cafes on campus. Students can provide opinions about meal quality, pricing, hygiene, and variety to guide others in choosing where to eat.
 
 **_3. Transportation Services_** <br>
-This section is dedicated to reviews and discussions about the university’s shuttle service, which is the primary transportation option for students commuting to and from Sabancı University. Users can share their opinions on aspects such as punctuality, comfort, safety, and overall service quality.
+This section is dedicated to reviews and discussions about the university’s shuttle service, which is the primary transportation option for students commuting to and from Sabancı University. Users can share their problems on aspects such as punctuality, comfort, safety, and overall service quality.
 
 **_4. Dormitories_** <br>
 Users can post reviews about the on-campus housing options. Topics may include room conditions, cleanliness, roommate experiences, social environment, and proximity to key campus locations.
