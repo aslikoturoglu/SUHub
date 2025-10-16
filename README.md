@@ -41,4 +41,4 @@ This category highlights both university-organized and student-led events, inclu
 | Emre Törehan Törer | 32216 | Presentation & Communication Lead |
 | Korcan Baykal | 32225 | Learning & Research Lead |
 | Aslı Koturoğlu | 32363 | Documentation & Submission Lead |
-| Işık Giray Önal | 34088 | I​​ntegration & Repository Lead |
+| Işık Giray Onal | 34088 | I​​ntegration & Repository Lead |
