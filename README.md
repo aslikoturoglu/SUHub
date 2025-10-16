@@ -32,7 +32,7 @@ Students can discuss informal social gatherings, hobbies, and leisure opportunit
 
 **_8. Events_** <br>
 This category highlights both university organized and student-led events, including seminars, concerts, workshops, and cultural activities. Users can share experiences and recommendations for future participants.
-
+ 
 ## Group Members
 | Name | Student ID | Role |
 |----------|----------|----------|
