@@ -16,13 +16,10 @@ class ProfileScreen extends StatelessWidget {
         onTap: (index) {
           switch (index) {
             case 0:
-              Navigator.pushReplacementNamed(context, AppRoutes.categories);
               break;
             case 1:
-              Navigator.pushReplacementNamed(context, AppRoutes.home);
               break;
             case 2:
-              Navigator.pushReplacementNamed(context, AppRoutes.profile);
               break;
           }
         },
