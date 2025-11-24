@@ -3,26 +3,22 @@ import '../routes.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_text_styles.dart';
 
-class SignupScreen extends StatefulWidget {
-  const SignupScreen({super.key});
+class SigninScreen extends StatefulWidget {
+  const SigninScreen({super.key});
 
   @override
-  State<SignupScreen> createState() => _SignupScreenState();
+  State<SigninScreen> createState() => _SigninScreenState();
 }
 
-class _SignupScreenState extends State<SignupScreen> {
+class _SigninScreenState extends State<SigninScreen> {
   final _formKey = GlobalKey<FormState>();
 
   final _emailCtrl = TextEditingController();
-  final _usernameCtrl = TextEditingController();
   final _passwordCtrl = TextEditingController();
-
-  bool acceptedTerms = false;
 
   @override
   void dispose() {
     _emailCtrl.dispose();
-    _usernameCtrl.dispose();
     _passwordCtrl.dispose();
     super.dispose();
   }
@@ -31,31 +27,24 @@ class _SignupScreenState extends State<SignupScreen> {
     return InputDecoration(
       filled: true,
       fillColor: Colors.white.withOpacity(0.95),
-      contentPadding:
-      const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+      contentPadding: const EdgeInsets.symmetric(
+        horizontal: 14,
+        vertical: 12,
+      ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
         borderSide: const BorderSide(color: Colors.transparent),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
-        borderSide: BorderSide(color: Colors.blue.shade200),
+        borderSide: BorderSide(color: Colors.blueAccent),
       ),
     );
   }
 
-  void _register() {
+  void _signIn() {
     if (!_formKey.currentState!.validate()) return;
-    if (!acceptedTerms) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('You must accept the terms of service.'),
-        ),
-      );
-      return;
-    }
 
-    // Şimdilik sadece geri Welcome'a dönelim veya ileride Home'a gidebilirsiniz
     Navigator.pushReplacementNamed(context, AppRoutes.welcome);
   }
 
@@ -127,21 +116,6 @@ class _SignupScreenState extends State<SignupScreen> {
                         ),
                         const SizedBox(height: 18),
 
-                        // USERNAME
-                        const Text('Username', style: AppTextStyles.bodyWhite),
-                        const SizedBox(height: 4),
-                        TextFormField(
-                          controller: _usernameCtrl,
-                          decoration: _inputDecoration(),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Required';
-                            }
-                            return null;
-                          },
-                        ),
-                        const SizedBox(height: 18),
-
                         // PASSWORD
                         const Text('Password', style: AppTextStyles.bodyWhite),
                         const SizedBox(height: 4),
@@ -156,51 +130,30 @@ class _SignupScreenState extends State<SignupScreen> {
                             return null;
                           },
                         ),
-                        const SizedBox(height: 18),
+                        const SizedBox(height: 10),
 
-                        // TERMS SWITCH
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Switch(
-                              value: acceptedTerms,
-                              activeThumbColor: Colors.white,
-                              onChanged: (val) {
-                                setState(() {
-                                  acceptedTerms = val;
-                                });
-                              },
-                            ),
-                            const SizedBox(width: 4),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: const [
-                                  Text(
-                                    'I accept the terms of service and privacy policy',
-                                    style: AppTextStyles.bodyWhite,
-                                  ),
-                                  SizedBox(height: 4),
-                                  Text(
-                                    'Click to read the document.',
-                                    style: TextStyle(
-                                      fontSize: 13,
-                                      color: Colors.white,
-                                      decoration: TextDecoration.underline,
-                                    ),
-                                  ),
-                                ],
+                        // FORGOT PASSWORD
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: TextButton(
+                            onPressed: () {},
+                            child: const Text(
+                              'Forgot password?',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.white,
+                                decoration: TextDecoration.underline,
                               ),
                             ),
-                          ],
+                          ),
                         ),
-                        const SizedBox(height: 18),
+                        const SizedBox(height: 12),
 
-                        // REGISTER BUTTON
+                        // SIGN IN BUTTON
                         SizedBox(
                           width: double.infinity,
                           child: ElevatedButton(
-                            onPressed: _register,
+                            onPressed: _signIn,
                             style: ElevatedButton.styleFrom(
                               backgroundColor: AppColors.primary,
                               padding:
@@ -210,29 +163,30 @@ class _SignupScreenState extends State<SignupScreen> {
                               ),
                             ),
                             child: const Text(
-                              'Register',
-                              style:
-                              TextStyle(color: Colors.white, fontSize: 16),
+                              'Sign In',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                              ),
                             ),
                           ),
                         ),
                         const SizedBox(height: 14),
 
-                        // ALREADY HAVE ACCOUNT
+                        // SIGN UP LINK
                         Center(
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               const Text(
-                                'Already have an account? ',
+                                'Don’t have an account? ',
                                 style: AppTextStyles.bodyWhite,
                               ),
                               GestureDetector(
-                                onTap: () =>
-                                    Navigator.pushReplacementNamed(
-                                        context, AppRoutes.signin),
+                                onTap: () => Navigator.pushReplacementNamed(
+                                    context, AppRoutes.signup),
                                 child: const Text(
-                                  'Sign In',
+                                  'Sign Up',
                                   style: TextStyle(
                                     fontSize: 14,
                                     color: Colors.white,
@@ -242,7 +196,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               ),
                             ],
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),
@@ -250,6 +204,8 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
             ),
           ),
+
+
           SafeArea(
             child: Align(
               alignment: Alignment.topLeft,
@@ -265,7 +221,7 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
             ),
           ),
-        ]
+        ],
       ),
     );
   }
