@@ -204,7 +204,7 @@ class _EventCard extends StatelessWidget {
 
 
 
-                        Navigator.pushNamed(context, AppRoutes.eventDetail);
+
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.blue,
