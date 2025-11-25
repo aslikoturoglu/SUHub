@@ -15,19 +15,19 @@ class EventsScreen extends StatelessWidget {
       _Event(
         title: 'SuSnow Palandöken',
         date: '18.12.2025',
-        imageAsset: 'assets/images/palandoken.png',
+        imageAsset: 'https://cdn3.enuygun.com/media/lib/1x720/uploads/image/dedeman-palandoken-erzurum-one-cikan-resim-76402883.webp',
 
       ),
       _Event(
         title: 'Radyosu Yılbaşı Partisi',
         date: '30.12.2025',
-        imageAsset: 'assets/images/party.png',
+        imageAsset: 'https://kutlamamarketi.com/img/cms/parti.png',
 
       ),
       _Event(
         title: 'Sabancı Seahawks Maçı',
         date: '24.01.2026',
-        imageAsset: 'assets/images/seahawks.png',
+        imageAsset: 'https://upload.wikimedia.org/wikipedia/commons/4/44/2004_Vanderbilt-Navy_Game_TE.jpg',
 
       ),
     ];
@@ -168,7 +168,7 @@ class _EventCard extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
             ),
-            child: Image.asset(
+            child: Image.network(
               event.imageAsset,
               fit: BoxFit.cover,
             ),
