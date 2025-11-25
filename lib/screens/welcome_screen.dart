@@ -35,7 +35,6 @@ class WelcomeScreen extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                // LOGO
                 Image.asset(
                   'assets/images/logo.png',
                   height: 120,
@@ -68,7 +67,6 @@ class WelcomeScreen extends StatelessWidget {
 
                 const SizedBox(height: 16),
 
-                // SIGN UP BUTTON
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(

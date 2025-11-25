@@ -83,7 +83,6 @@ class CategoriesScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
 
-                // SEARCH BAR
                 TextField(
                   decoration: InputDecoration(
                     hintText: 'Search',

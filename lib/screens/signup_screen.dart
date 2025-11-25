@@ -55,7 +55,6 @@ class _SignupScreenState extends State<SignupScreen> {
       return;
     }
 
-    // Şimdilik sadece geri Welcome'a dönelim veya ileride Home'a gidebilirsiniz
     Navigator.pushReplacementNamed(context, AppRoutes.welcome);
   }
 
@@ -109,7 +108,6 @@ class _SignupScreenState extends State<SignupScreen> {
                           ),
                         ),
 
-                        // EMAIL
                         const Text('Email', style: AppTextStyles.bodyWhite),
                         const SizedBox(height: 4),
                         TextFormField(
@@ -127,7 +125,6 @@ class _SignupScreenState extends State<SignupScreen> {
                         ),
                         const SizedBox(height: 18),
 
-                        // USERNAME
                         const Text('Username', style: AppTextStyles.bodyWhite),
                         const SizedBox(height: 4),
                         TextFormField(
@@ -142,7 +139,6 @@ class _SignupScreenState extends State<SignupScreen> {
                         ),
                         const SizedBox(height: 18),
 
-                        // PASSWORD
                         const Text('Password', style: AppTextStyles.bodyWhite),
                         const SizedBox(height: 4),
                         TextFormField(
@@ -158,7 +154,6 @@ class _SignupScreenState extends State<SignupScreen> {
                         ),
                         const SizedBox(height: 18),
 
-                        // TERMS SWITCH
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -196,7 +191,6 @@ class _SignupScreenState extends State<SignupScreen> {
                         ),
                         const SizedBox(height: 18),
 
-                        // REGISTER BUTTON
                         SizedBox(
                           width: double.infinity,
                           child: ElevatedButton(
@@ -218,7 +212,6 @@ class _SignupScreenState extends State<SignupScreen> {
                         ),
                         const SizedBox(height: 14),
 
-                        // ALREADY HAVE ACCOUNT
                         Center(
                           child: Row(
                             mainAxisSize: MainAxisSize.min,

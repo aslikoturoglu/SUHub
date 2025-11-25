@@ -1,5 +1,3 @@
-// lib/screens/top_post_detail_screen.dart
-
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_text_styles.dart';
@@ -86,7 +84,6 @@ class _TopPostDetailScreenState extends State<TopPostDetailScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Post kartı (ladyinfo postu)
                       Container(
                         decoration: BoxDecoration(
                           color: Colors.white.withOpacity(0.95),
@@ -153,7 +150,6 @@ class _TopPostDetailScreenState extends State<TopPostDetailScreen> {
                       ),
                       const SizedBox(height: 16),
 
-                      // Comments
                       for (final c in _comments) ...[
                         Container(
                           width: double.infinity,
@@ -195,7 +191,6 @@ class _TopPostDetailScreenState extends State<TopPostDetailScreen> {
                 ),
               ),
 
-              // Comment bar
               Padding(
                 padding: EdgeInsets.only(
                   bottom: MediaQuery.of(context).viewInsets.bottom,

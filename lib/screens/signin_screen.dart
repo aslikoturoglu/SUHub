@@ -98,7 +98,6 @@ class _SigninScreenState extends State<SigninScreen> {
                           ),
                         ),
 
-                        // EMAIL
                         const Text('Email', style: AppTextStyles.bodyWhite),
                         const SizedBox(height: 4),
                         TextFormField(
@@ -116,7 +115,6 @@ class _SigninScreenState extends State<SigninScreen> {
                         ),
                         const SizedBox(height: 18),
 
-                        // PASSWORD
                         const Text('Password', style: AppTextStyles.bodyWhite),
                         const SizedBox(height: 4),
                         TextFormField(
@@ -132,7 +130,6 @@ class _SigninScreenState extends State<SigninScreen> {
                         ),
                         const SizedBox(height: 10),
 
-                        // FORGOT PASSWORD
                         Align(
                           alignment: Alignment.centerRight,
                           child: TextButton(
@@ -149,7 +146,6 @@ class _SigninScreenState extends State<SigninScreen> {
                         ),
                         const SizedBox(height: 12),
 
-                        // SIGN IN BUTTON
                         SizedBox(
                           width: double.infinity,
                           child: ElevatedButton(
@@ -173,7 +169,6 @@ class _SigninScreenState extends State<SigninScreen> {
                         ),
                         const SizedBox(height: 14),
 
-                        // SIGN UP LINK
                         Center(
                           child: Row(
                             mainAxisSize: MainAxisSize.min,

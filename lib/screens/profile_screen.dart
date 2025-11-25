@@ -58,7 +58,6 @@ class ProfileScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                // TOP ROW: TITLE + LOGO
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -78,7 +77,6 @@ class ProfileScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 32),
 
-                // PROFILE CARD CONTAINER
                 Container(
                   width: size.width * 0.9,
                   padding: const EdgeInsets.fromLTRB(20, 36, 20, 32),
@@ -88,7 +86,6 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   child: Column(
                     children: [
-                      // AVATAR
                       Container(
                         width: 120,
                         height: 120,
@@ -104,7 +101,6 @@ class ProfileScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 28),
 
-                      // NAME
                       const Text(
                         'Name Surname',
                         style: TextStyle(
@@ -115,7 +111,6 @@ class ProfileScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 8),
 
-                      // USERNAME
                       const Text(
                         '@username_',
                         style: TextStyle(
@@ -125,7 +120,6 @@ class ProfileScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 6),
 
-                      // EMAIL
                       const Text(
                         'name.surname@sabanciuniv.edu',
                         style: TextStyle(
@@ -142,7 +136,6 @@ class ProfileScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 20),
 
-                      // SETTINGS OPTIONS
                       _ProfileOption(title: 'Add Birth Date'),
                       _ProfileOption(title: 'Change Username'),
                       _ProfileOption(title: 'Change Profile Picture'),

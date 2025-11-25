@@ -31,7 +31,6 @@ class EventDetailScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Üst başlık + logo
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -66,7 +65,6 @@ class EventDetailScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
 
-                // Geri
                 InkWell(
                   onTap: () => Navigator.pop(context),
                   child: Row(
@@ -83,7 +81,6 @@ class EventDetailScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
 
-                // Büyük foto
                 Container(
                   width: double.infinity,
                   height: 220,

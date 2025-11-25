@@ -69,7 +69,6 @@ class EventsScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
 
-                // Search bar
                 TextField(
                   decoration: InputDecoration(
                     hintText: 'Search',
@@ -94,7 +93,6 @@ class EventsScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
 
-                // Geri butonu
                 Align(
                   alignment: Alignment.centerLeft,
                   child: InkWell(
@@ -115,7 +113,6 @@ class EventsScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 12),
 
-                // Event listesi
                 Expanded(
                   child: ListView.builder(
                     itemCount: events.length,
@@ -134,7 +131,6 @@ class EventsScreen extends StatelessWidget {
   }
 }
 
-// --- lokal model ---
 class _Event {
   final String title;
   final String date;
@@ -149,7 +145,6 @@ class _Event {
   });
 }
 
-// --- kart widget ---
 class _EventCard extends StatelessWidget {
   final _Event event;
 
@@ -166,7 +161,6 @@ class _EventCard extends StatelessWidget {
       ),
       child: Row(
         children: [
-          // Foto
           Container(
             width: 110,
             height: 110,
@@ -180,7 +174,6 @@ class _EventCard extends StatelessWidget {
             ),
           ),
 
-          // Sağ taraf
           Expanded(
             child: Padding(
               padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),

@@ -12,7 +12,7 @@ class HomeScreen extends StatelessWidget {
 
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 1, // 🔥 BURAYI HER SAYFADA KENDİ INDEX’İNE GÖRE DEĞİŞTİR
+        currentIndex: 1, 
         onTap: (index) {
           switch (index) {
             case 0:
@@ -59,7 +59,6 @@ class HomeScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // LOGO
                 Center(
                   child: Image.asset(
                     'assets/images/logo.png',
@@ -68,7 +67,6 @@ class HomeScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
 
-                // SEARCH BAR
                 TextField(
                   decoration: InputDecoration(
                     hintText: 'Search',
@@ -93,7 +91,6 @@ class HomeScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 18),
 
-                // DATE + TITLE
                 const Text(
                   'day/month/year',
                   style: AppTextStyles.bodyWhite,
@@ -110,7 +107,6 @@ class HomeScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 12),
 
-                // TOP CONTEXT CARDS
                 GridView.count(
                   crossAxisCount: 2,
                   shrinkWrap: true,
