@@ -45,12 +45,12 @@ class WelcomeScreen extends StatelessWidget {
                 const Text('SUHub', style: AppTextStyles.appTitle),
                 const SizedBox(height: 48),
 
-                // SIGN IN BUTTON (şimdilik hiçbir yere gitmiyor)
+
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      // ileride login ekranına gidilebilir
+                      Navigator.pushNamed(context, AppRoutes.signin);
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.primary,
@@ -83,6 +83,27 @@ class WelcomeScreen extends StatelessWidget {
                     ),
                     child: const Text(
                       'Sign Up',
+                      style: TextStyle(color: Colors.white, fontSize: 16),
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 16),
+
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () =>
+                        Navigator.pushNamed(context, AppRoutes.home),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.primary,
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    child: const Text(
+                      'Home Screen',
                       style: TextStyle(color: Colors.white, fontSize: 16),
                     ),
                   ),
