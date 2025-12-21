@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/auth_provider.dart';
+import '../providers/preferences_provider.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_text_styles.dart';
 import '../routes.dart';
+import '../widgets/auth_required.dart';
 
 class CategoriesScreen extends StatelessWidget {
   const CategoriesScreen({super.key});
@@ -9,6 +14,13 @@ class CategoriesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final auth = context.watch<AuthProvider>();
+    final prefs = context.watch<PreferencesProvider>();
+    final currentIndex = prefs.loaded ? prefs.lastTabIndex : 0;
+
+    if (!auth.isLoggedIn) {
+      return const AuthRequired();
+    }
 
     final categories = <String>[
       'Events',
@@ -17,8 +29,9 @@ class CategoriesScreen extends StatelessWidget {
 
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 0,
+        currentIndex: currentIndex,
         onTap: (index) {
+          prefs.setLastTab(index);
           switch (index) {
             case 0:
               Navigator.pushReplacementNamed(context, AppRoutes.categories);

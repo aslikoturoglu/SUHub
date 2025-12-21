@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/auth_provider.dart';
+import '../providers/preferences_provider.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_text_styles.dart';
 import '../routes.dart';
+import '../widgets/auth_required.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -9,11 +14,19 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final auth = context.watch<AuthProvider>();
+    final prefs = context.watch<PreferencesProvider>();
+    final currentIndex = prefs.loaded ? prefs.lastTabIndex : 2;
+
+    if (!auth.isLoggedIn) {
+      return const AuthRequired();
+    }
 
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 2,
+        currentIndex: currentIndex,
         onTap: (index) {
+          prefs.setLastTab(index);
           switch (index) {
             case 0:
               Navigator.pushReplacementNamed(context, AppRoutes.categories);
@@ -101,9 +114,11 @@ class ProfileScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 28),
 
-                      const Text(
-                        'Name Surname',
-                        style: TextStyle(
+                      Text(
+                        auth.user?.displayName ??
+                            prefs.savedUsername ??
+                            'Name Surname',
+                        style: const TextStyle(
                           fontSize: 30,
                           fontWeight: FontWeight.w800,
                           color: Colors.white,
@@ -111,18 +126,18 @@ class ProfileScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 8),
 
-                      const Text(
-                        '@username_',
-                        style: TextStyle(
+                      Text(
+                        '@${(prefs.savedUsername ?? 'username_')}',
+                        style: const TextStyle(
                           fontSize: 16,
                           color: Colors.white70,
                         ),
                       ),
                       const SizedBox(height: 6),
 
-                      const Text(
-                        'name.surname@sabanciuniv.edu',
-                        style: TextStyle(
+                      Text(
+                        auth.user?.email ?? 'name.surname@sabanciuniv.edu',
+                        style: const TextStyle(
                           fontSize: 15,
                           color: Colors.white,
                           decoration: TextDecoration.underline,
@@ -139,6 +154,41 @@ class ProfileScreen extends StatelessWidget {
                       _ProfileOption(title: 'Add Birth Date'),
                       _ProfileOption(title: 'Change Username'),
                       _ProfileOption(title: 'Change Profile Picture'),
+                      const SizedBox(height: 18),
+                      ElevatedButton.icon(
+                        onPressed: auth.busy
+                            ? null
+                            : () async {
+                                await context.read<AuthProvider>().signOut();
+                                if (!context.mounted) return;
+                                Navigator.pushNamedAndRemoveUntil(
+                                  context,
+                                  AppRoutes.welcome,
+                                  (route) => false,
+                                );
+                              },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          foregroundColor: AppColors.primary,
+                        ),
+                        icon: auth.busy
+                            ? const SizedBox(
+                                height: 18,
+                                width: 18,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  color: AppColors.primary,
+                                ),
+                              )
+                            : const Icon(Icons.logout),
+                        label: Text(
+                          auth.busy ? 'Signing out...' : 'Logout',
+                          style: const TextStyle(
+                            color: AppColors.primary,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),

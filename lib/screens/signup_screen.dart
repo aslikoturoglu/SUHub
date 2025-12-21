@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/auth_provider.dart';
+import '../providers/preferences_provider.dart';
 import '../routes.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_text_styles.dart';
@@ -44,7 +48,7 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 
-  void _register() {
+  Future<void> _register() async {
     if (!_formKey.currentState!.validate()) return;
     if (!acceptedTerms) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -55,7 +59,31 @@ class _SignupScreenState extends State<SignupScreen> {
       return;
     }
 
-    Navigator.pushReplacementNamed(context, AppRoutes.welcome);
+    final auth = context.read<AuthProvider>();
+    final prefs = context.read<PreferencesProvider>();
+
+    await auth.signUp(
+      email: _emailCtrl.text.trim(),
+      password: _passwordCtrl.text.trim(),
+      username: _usernameCtrl.text.trim(),
+    );
+
+    if (!mounted) return;
+    if (auth.error != null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(auth.error!)),
+      );
+      return;
+    }
+
+    await prefs.setUsername(_usernameCtrl.text.trim());
+
+    if (!mounted) return;
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      AppRoutes.home,
+      (route) => false,
+    );
   }
 
   @override
@@ -191,24 +219,37 @@ class _SignupScreenState extends State<SignupScreen> {
                         ),
                         const SizedBox(height: 18),
 
-                        SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton(
-                            onPressed: _register,
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.primary,
-                              padding:
-                              const EdgeInsets.symmetric(vertical: 14),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
+                        Consumer<AuthProvider>(
+                          builder: (_, auth, __) {
+                            return SizedBox(
+                              width: double.infinity,
+                              child: ElevatedButton(
+                                onPressed: auth.busy ? null : _register,
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: AppColors.primary,
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 14),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                ),
+                                child: auth.busy
+                                    ? const SizedBox(
+                                        height: 18,
+                                        width: 18,
+                                        child: CircularProgressIndicator(
+                                          strokeWidth: 2,
+                                          color: Colors.white,
+                                        ),
+                                      )
+                                    : const Text(
+                                        'Register',
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 16),
+                                      ),
                               ),
-                            ),
-                            child: const Text(
-                              'Register',
-                              style:
-                              TextStyle(color: Colors.white, fontSize: 16),
-                            ),
-                          ),
+                            );
+                          },
                         ),
                         const SizedBox(height: 14),
 

@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../models/app_event.dart';
+import '../providers/auth_provider.dart';
+import '../providers/event_provider.dart';
+import '../providers/preferences_provider.dart';
 import '../routes.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_text_styles.dart';
+import '../widgets/auth_required.dart';
 
 class EventsScreen extends StatelessWidget {
   const EventsScreen({super.key});
@@ -9,30 +16,119 @@ class EventsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final auth = context.watch<AuthProvider>();
+    final prefs = context.watch<PreferencesProvider>();
+    final eventProvider = context.watch<EventProvider>();
+    final currentIndex = prefs.loaded ? prefs.lastTabIndex : 0;
 
+    if (!auth.isLoggedIn) {
+      return const AuthRequired();
+    }
 
-    final events = <_Event>[
-      _Event(
-        title: 'SuSnow Palandöken',
-        date: '18.12.2025',
-        imageAsset: 'https://cdn3.enuygun.com/media/lib/1x720/uploads/image/dedeman-palandoken-erzurum-one-cikan-resim-76402883.webp',
+    Future<void> openEventForm({AppEvent? existing}) async {
+      final titleCtrl = TextEditingController(text: existing?.title ?? '');
+      final descCtrl =
+          TextEditingController(text: existing?.description ?? '');
+      final dateCtrl = TextEditingController(text: existing?.date ?? '');
+      final imageCtrl =
+          TextEditingController(text: existing?.imageUrl ?? '');
 
-      ),
-      _Event(
-        title: 'Radyosu Yılbaşı Partisi',
-        date: '30.12.2025',
-        imageAsset: 'https://kutlamamarketi.com/img/cms/parti.png',
-
-      ),
-      _Event(
-        title: 'Sabancı Seahawks Maçı',
-        date: '24.01.2026',
-        imageAsset: 'https://upload.wikimedia.org/wikipedia/commons/4/44/2004_Vanderbilt-Navy_Game_TE.jpg',
-
-      ),
-    ];
+      await showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        backgroundColor: Colors.white,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(18)),
+        ),
+        builder: (ctx) {
+          return Padding(
+            padding: EdgeInsets.only(
+              left: 16,
+              right: 16,
+              bottom: MediaQuery.of(ctx).viewInsets.bottom + 16,
+              top: 20,
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  existing == null ? 'Add Event' : 'Edit Event',
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                const SizedBox(height: 12),
+                TextField(
+                  controller: titleCtrl,
+                  decoration: const InputDecoration(labelText: 'Title'),
+                ),
+                TextField(
+                  controller: descCtrl,
+                  decoration: const InputDecoration(labelText: 'Description'),
+                ),
+                TextField(
+                  controller: dateCtrl,
+                  decoration:
+                      const InputDecoration(labelText: 'Date (e.g. 24.01.2026)'),
+                ),
+                TextField(
+                  controller: imageCtrl,
+                  decoration: const InputDecoration(labelText: 'Image URL'),
+                ),
+                const SizedBox(height: 12),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      if (titleCtrl.text.isEmpty || dateCtrl.text.isEmpty) {
+                        return;
+                      }
+                      try {
+                        if (existing == null) {
+                          await eventProvider.addEvent(
+                            title: titleCtrl.text.trim(),
+                            description: descCtrl.text.trim(),
+                            date: dateCtrl.text.trim(),
+                            imageUrl: imageCtrl.text.trim(),
+                          );
+                        } else {
+                          await eventProvider.updateEvent(
+                            existing.copyWith(
+                              title: titleCtrl.text.trim(),
+                              description: descCtrl.text.trim(),
+                              date: dateCtrl.text.trim(),
+                              imageUrl: imageCtrl.text.trim(),
+                            ),
+                          );
+                        }
+                        if (ctx.mounted) Navigator.pop(ctx);
+                      } catch (e) {
+                        if (ctx.mounted) {
+                          ScaffoldMessenger.of(ctx).showSnackBar(
+                            SnackBar(content: Text('Failed: $e')),
+                          );
+                        }
+                      }
+                    },
+                    child: Text(existing == null ? 'Create' : 'Update'),
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      );
+    }
 
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.white,
+        foregroundColor: AppColors.primary,
+        onPressed: () => openEventForm(),
+        child: const Icon(Icons.add),
+      ),
       body: Container(
         width: size.width,
         height: size.height,
@@ -49,7 +145,6 @@ class EventsScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Üst başlık + logo
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -114,11 +209,44 @@ class EventsScreen extends StatelessWidget {
                 const SizedBox(height: 12),
 
                 Expanded(
-                  child: ListView.builder(
-                    itemCount: events.length,
-                    itemBuilder: (context, index) {
-                      final event = events[index];
-                      return _EventCard(event: event);
+                  child: Builder(
+                    builder: (context) {
+                      if (eventProvider.loading) {
+                        return const Center(
+                          child: CircularProgressIndicator(color: Colors.white),
+                        );
+                      }
+
+                      if (eventProvider.error != null) {
+                        return Center(
+                          child: Text(
+                            eventProvider.error!,
+                            style: AppTextStyles.bodyWhite,
+                          ),
+                        );
+                      }
+
+                      if (eventProvider.events.isEmpty) {
+                        return const Center(
+                          child: Text(
+                            'No events yet. Add your first one!',
+                            style: AppTextStyles.bodyWhite,
+                          ),
+                        );
+                      }
+
+                      return ListView.builder(
+                        itemCount: eventProvider.events.length,
+                        itemBuilder: (context, index) {
+                          final event = eventProvider.events[index];
+                          return _EventCard(
+                            event: event,
+                            onEdit: () => openEventForm(existing: event),
+                            onDelete: () =>
+                                eventProvider.deleteEvent(event.id),
+                          );
+                        },
+                      );
                     },
                   ),
                 ),
@@ -127,28 +255,51 @@ class EventsScreen extends StatelessWidget {
           ),
         ),
       ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: currentIndex,
+        onTap: (index) {
+          prefs.setLastTab(index);
+          switch (index) {
+            case 0:
+              Navigator.pushReplacementNamed(context, AppRoutes.categories);
+              break;
+            case 1:
+              Navigator.pushReplacementNamed(context, AppRoutes.home);
+              break;
+            case 2:
+              Navigator.pushReplacementNamed(context, AppRoutes.profile);
+              break;
+          }
+        },
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.grid_view_rounded),
+            label: 'Categories',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home_rounded),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person_rounded),
+            label: 'Profile',
+          ),
+        ],
+      ),
     );
   }
 }
 
-class _Event {
-  final String title;
-  final String date;
-  final String imageAsset;
-
-
-  _Event({
-    required this.title,
-    required this.date,
-    required this.imageAsset,
-
-  });
-}
-
 class _EventCard extends StatelessWidget {
-  final _Event event;
+  final AppEvent event;
+  final VoidCallback onEdit;
+  final VoidCallback onDelete;
 
-  const _EventCard({required this.event});
+  const _EventCard({
+    required this.event,
+    required this.onEdit,
+    required this.onDelete,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -168,12 +319,10 @@ class _EventCard extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
             ),
-            child: Image.network(
-              event.imageAsset,
-              fit: BoxFit.cover,
-            ),
+            child: event.imageUrl.isNotEmpty
+                ? Image.network(event.imageUrl, fit: BoxFit.cover)
+                : Container(color: Colors.blue.shade100),
           ),
-
           Expanded(
             child: Padding(
               padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
@@ -197,30 +346,38 @@ class _EventCard extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  Align(
-                    alignment: Alignment.bottomLeft,
-                    child: ElevatedButton(
-                      onPressed: () {
-
-
-
-                        Navigator.pushNamed(context, AppRoutes.eventDetail);
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 18,
-                          vertical: 8,
+                  Row(
+                    children: [
+                      ElevatedButton(
+                        onPressed: () => Navigator.pushNamed(
+                          context,
+                          AppRoutes.eventDetail,
+                          arguments: event,
                         ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.blue,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 8,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                        child: const Text(
+                          'Details',
+                          style: TextStyle(color: Colors.white),
                         ),
                       ),
-                      child: const Text(
-                        'Details',
-                        style: TextStyle(color: Colors.white),
+                      IconButton(
+                        onPressed: onEdit,
+                        icon: const Icon(Icons.edit, color: Colors.black54),
                       ),
-                    ),
+                      IconButton(
+                        onPressed: onDelete,
+                        icon: const Icon(Icons.delete, color: Colors.red),
+                      ),
+                    ],
                   ),
                 ],
               ),

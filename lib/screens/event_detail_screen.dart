@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+import '../models/app_event.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_text_styles.dart';
 
@@ -8,11 +10,8 @@ class EventDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-
-
-    const String title = 'Sabancı Seahawks Maçı';
-    const String date = '24.01.2026';
-    const String imageAsset = 'assets/images/seahawks.png';
+    final event =
+        ModalRoute.of(context)?.settings.arguments as AppEvent?;
 
     return Scaffold(
       body: Container(
@@ -37,19 +36,19 @@ class EventDetailScreen extends StatelessWidget {
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
+                        children: [
                           Text(
-                            title,
-                            style: TextStyle(
+                            event?.title ?? 'Event',
+                            style: const TextStyle(
                               fontSize: 22,
                               fontWeight: FontWeight.w700,
                               color: Colors.white,
                             ),
                           ),
-                          SizedBox(height: 4),
+                          const SizedBox(height: 4),
                           Text(
-                            date,
-                            style: TextStyle(
+                            event?.date ?? '',
+                            style: const TextStyle(
                               fontSize: 15,
                               color: Colors.white70,
                             ),
@@ -89,10 +88,12 @@ class EventDetailScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   clipBehavior: Clip.antiAlias,
-                  child: Image.asset(
-                    imageAsset,
-                    fit: BoxFit.contain,
-                  ),
+                  child: event?.imageUrl.isNotEmpty == true
+                      ? Image.network(event!.imageUrl, fit: BoxFit.cover)
+                      : Image.asset(
+                          'assets/images/logo.png',
+                          fit: BoxFit.contain,
+                        ),
                 ),
                 const SizedBox(height: 24),
 
@@ -106,11 +107,11 @@ class EventDetailScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
 
-                const Text(
-                  'Kendi evimizde, kendi taraftarımızın önünde 24 Ocak\'ta sahaya çıkıyoruz!\n\n'
-                      'Her oyun, her mücadele Sabancı Seahawks ruhunu göstermek için bir fırsat!\n\n'
-                      'Tüm enerjimizle Akdeniz Heroes karşısında sahadayız! 💙',
-                  style: TextStyle(
+                Text(
+                  event?.description.isNotEmpty == true
+                      ? event!.description
+                      : 'No description provided.',
+                  style: const TextStyle(
                     fontSize: 15,
                     color: Colors.white,
                     height: 1.4,

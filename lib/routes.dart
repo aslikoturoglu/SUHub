@@ -7,11 +7,13 @@ import '/screens/signin_screen.dart';
 import '/screens/top_post_detail_screen.dart';
 import '/screens/top_posts_screen.dart';
 import 'package:flutter/material.dart';
+import 'screens/auth_gate.dart';
 import 'screens/welcome_screen.dart';
 import 'screens/signup_screen.dart';
 
 class AppRoutes {
-  static const String welcome = '/';
+  static const String root = '/';
+  static const String welcome = '/welcome';
   static const String signup = '/signup';
   static const String signin = '/signin';
   static const String home = '/home';
@@ -23,6 +25,7 @@ class AppRoutes {
   static const String topPostDetail = '/top_post_detail';
 
   static Map<String, WidgetBuilder> routes = {
+    root: (_) => const AuthGate(),
     welcome: (_) => const WelcomeScreen(),
     signup: (_) => const SignupScreen(),
     signin: (_) => const SigninScreen(),
