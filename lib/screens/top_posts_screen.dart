@@ -18,67 +18,21 @@ class TopPostsScreen extends StatelessWidget {
     final user = auth.user!;
     final username = auth.profile?.username ?? (user.email ?? 'user');
 
-    final textController = TextEditingController();
-    String category = 'General';
-
     final created = await showDialog<bool>(
       context: context,
-      builder: (ctx) {
-        return AlertDialog(
-          title: const Text('Create Post'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                controller: textController,
-                maxLines: 3,
-                decoration: const InputDecoration(
-                  labelText: 'Text',
-                  hintText: 'Write something...',
-                ),
-              ),
-              const SizedBox(height: 10),
-              DropdownButtonFormField<String>(
-                value: category,
-                items: const [
-                  DropdownMenuItem(value: 'General', child: Text('General')),
-                  DropdownMenuItem(value: 'Campus', child: Text('Campus')),
-                  DropdownMenuItem(value: 'Clubs', child: Text('Clubs')),
-                  DropdownMenuItem(value: 'Midterms', child: Text('Midterms')),
-                ],
-                onChanged: (v) => category = v ?? 'General',
-                decoration: const InputDecoration(labelText: 'Category'),
-              ),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(ctx, false),
-              child: const Text('Cancel'),
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                final text = textController.text.trim();
-                if (text.isEmpty) return;
-
-                await posts.createPost(
-                  text: text,
-                  category: category,
-                  createdBy: user.uid,
-                  authorUsername: username,
-                );
-
-                if (ctx.mounted) Navigator.pop(ctx, true);
-              },
-              child: const Text('Create'),
-            ),
-          ],
-        );
-      },
+      builder: (_) => _CreatePostDialog(
+        onCreate: (text, category) async {
+          await posts.createPost(
+            text: text,
+            category: category,
+            createdBy: user.uid,
+            authorUsername: username,
+          );
+        },
+      ),
     );
 
-    textController.dispose();
-
+    if (!context.mounted) return;
     if (created == true && posts.error != null) {
       // Provider error (rare)
       ScaffoldMessenger.of(context).showSnackBar(
@@ -91,6 +45,8 @@ class TopPostsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final auth = context.watch<AuthProvider>();
     final postsProvider = context.watch<PostsProvider>();
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     final user = auth.user;
     if (user == null) {
@@ -149,6 +105,9 @@ class TopPostsScreen extends StatelessWidget {
                 return _PostCard(
                   post: p,
                   isOwner: isOwner,
+                  colorScheme: colorScheme,
+                  isDark: isDark,
+                  userId: user.uid,
                   onTap: () {
                     Navigator.pushNamed(
                       context,
@@ -179,11 +138,17 @@ class TopPostsScreen extends StatelessWidget {
 class _PostCard extends StatelessWidget {
   final Post post;
   final bool isOwner;
+  final ColorScheme colorScheme;
+  final bool isDark;
+  final String userId;
   final VoidCallback onTap;
 
   const _PostCard({
     required this.post,
     required this.isOwner,
+    required this.colorScheme,
+    required this.isDark,
+    required this.userId,
     required this.onTap,
   });
 
@@ -195,13 +160,14 @@ class _PostCard extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.97),
+          color: colorScheme.surface.withOpacity(isDark ? 0.94 : 0.97),
           borderRadius: BorderRadius.circular(18),
           boxShadow: [
             BoxShadow(
               blurRadius: 10,
               offset: const Offset(0, 6),
-              color: Colors.black.withOpacity(0.08),
+              color:
+                  Theme.of(context).shadowColor.withOpacity(isDark ? 0.3 : 0.08),
             ),
           ],
         ),
@@ -213,14 +179,14 @@ class _PostCard extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: 18,
-                  backgroundColor: Colors.black.withOpacity(0.06),
+                  backgroundColor: colorScheme.surfaceVariant,
                   child: Text(
                     post.authorUsername.isNotEmpty
                         ? post.authorUsername[0].toUpperCase()
                         : 'U',
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontWeight: FontWeight.w800,
-                      color: Colors.black87,
+                      color: colorScheme.onSurface,
                     ),
                   ),
                 ),
@@ -228,24 +194,24 @@ class _PostCard extends StatelessWidget {
                 Expanded(
                   child: Text(
                     post.authorUsername,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontWeight: FontWeight.w800,
-                      color: Colors.black87,
+                      color: colorScheme.onSurface,
                     ),
                   ),
                 ),
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                   decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.06),
+                    color: colorScheme.surfaceVariant,
                     borderRadius: BorderRadius.circular(999),
                   ),
                   child: Text(
                     post.category,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w700,
-                      color: Colors.black87,
+                      color: colorScheme.onSurface,
                     ),
                   ),
                 ),
@@ -255,8 +221,8 @@ class _PostCard extends StatelessWidget {
 
             Text(
               post.text,
-              style: const TextStyle(
-                color: Colors.black87,
+              style: TextStyle(
+                color: colorScheme.onSurface,
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -265,24 +231,45 @@ class _PostCard extends StatelessWidget {
             // Footer stats (UI only for now)
             Row(
               children: [
-                const Icon(Icons.thumb_up_alt_outlined, size: 18),
+                Icon(
+                  Icons.thumb_up_alt_outlined,
+                  size: 18,
+                  color: colorScheme.onSurfaceVariant,
+                ),
                 const SizedBox(width: 4),
-                Text('${post.likes}'),
+                Text(
+                  '${post.likes}',
+                  style: TextStyle(color: colorScheme.onSurfaceVariant),
+                ),
                 const SizedBox(width: 14),
-                const Icon(Icons.thumb_down_alt_outlined, size: 18),
+                Icon(
+                  Icons.thumb_down_alt_outlined,
+                  size: 18,
+                  color: colorScheme.onSurfaceVariant,
+                ),
                 const SizedBox(width: 4),
-                Text('${post.dislikes}'),
+                Text(
+                  '${post.dislikes}',
+                  style: TextStyle(color: colorScheme.onSurfaceVariant),
+                ),
                 const SizedBox(width: 14),
-                const Icon(Icons.chat_bubble_outline, size: 18),
+                Icon(
+                  Icons.chat_bubble_outline,
+                  size: 18,
+                  color: colorScheme.onSurfaceVariant,
+                ),
                 const SizedBox(width: 4),
-                Text('${post.comments}'),
+                Text(
+                  '${post.comments}',
+                  style: TextStyle(color: colorScheme.onSurfaceVariant),
+                ),
                 const Spacer(),
                 if (isOwner)
-                  const Text(
+                  Text(
                     'My post',
                     style: TextStyle(
                       fontSize: 12,
-                      color: Colors.black54,
+                      color: colorScheme.onSurfaceVariant,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
@@ -291,6 +278,79 @@ class _PostCard extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class _CreatePostDialog extends StatefulWidget {
+  final Future<void> Function(String text, String category) onCreate;
+
+  const _CreatePostDialog({required this.onCreate});
+
+  @override
+  State<_CreatePostDialog> createState() => _CreatePostDialogState();
+}
+
+class _CreatePostDialogState extends State<_CreatePostDialog> {
+  final TextEditingController _textController = TextEditingController();
+  String _category = 'General';
+  bool _saving = false;
+
+  @override
+  void dispose() {
+    _textController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _handleCreate() async {
+    final text = _textController.text.trim();
+    if (text.isEmpty || _saving) return;
+
+    setState(() => _saving = true);
+    await widget.onCreate(text, _category);
+    if (!mounted) return;
+    Navigator.of(context).pop(true);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text('Create Post'),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          TextField(
+            controller: _textController,
+            maxLines: 3,
+            decoration: const InputDecoration(
+              labelText: 'Text',
+              hintText: 'Write something...',
+            ),
+          ),
+          const SizedBox(height: 10),
+          DropdownButtonFormField<String>(
+            value: _category,
+            items: const [
+              DropdownMenuItem(value: 'General', child: Text('General')),
+              DropdownMenuItem(value: 'Campus', child: Text('Campus')),
+              DropdownMenuItem(value: 'Clubs', child: Text('Clubs')),
+              DropdownMenuItem(value: 'Midterms', child: Text('Midterms')),
+            ],
+            onChanged: (v) => setState(() => _category = v ?? 'General'),
+            decoration: const InputDecoration(labelText: 'Category'),
+          ),
+        ],
+      ),
+      actions: [
+        TextButton(
+          onPressed: _saving ? null : () => Navigator.pop(context, false),
+          child: const Text('Cancel'),
+        ),
+        ElevatedButton(
+          onPressed: _saving ? null : _handleCreate,
+          child: Text(_saving ? 'Please wait...' : 'Create'),
+        ),
+      ],
     );
   }
 }

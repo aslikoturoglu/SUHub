@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_text_styles.dart';
 import '../providers/auth_provider.dart';
+import '../providers/theme_provider.dart';
 import '../routes.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -55,24 +56,26 @@ class ProfileScreen extends StatelessWidget {
 class _LoggedOutView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Profile',
-          style: AppTextStyles.appTitle.copyWith(fontSize: 26),
-        ),
+        Text('Profile', style: AppTextStyles.appTitle.copyWith(fontSize: 26)),
         const SizedBox(height: 12),
         Container(
           width: double.infinity,
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.22),
+            color: colorScheme.surface.withOpacity(0.85),
             borderRadius: BorderRadius.circular(22),
           ),
-          child: const Text(
+          child: Text(
             'You are not logged in.',
-            style: AppTextStyles.bodyWhite,
+            style: TextStyle(
+              color: colorScheme.onSurface,
+              fontWeight: FontWeight.w600,
+            ),
           ),
         ),
         const SizedBox(height: 12),
@@ -108,6 +111,9 @@ class _LoggedInView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.watch<ThemeProvider>();
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -118,9 +124,13 @@ class _LoggedInView extends StatelessWidget {
               'Profile',
               style: AppTextStyles.appTitle.copyWith(fontSize: 26),
             ),
-            Image.asset(
-              'assets/images/logo.png',
-              height: 48,
+            Container(
+              padding: const EdgeInsets.all(6),
+              decoration: BoxDecoration(
+                color: theme.isDark ? Colors.black : Colors.white,
+                shape: BoxShape.circle,
+              ),
+              child: Image.asset('assets/images/logo.png', height: 60),
             ),
           ],
         ),
@@ -130,13 +140,15 @@ class _LoggedInView extends StatelessWidget {
           width: double.infinity,
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.97),
+            color: colorScheme.surface.withOpacity(theme.isDark ? 0.94 : 0.97),
             borderRadius: BorderRadius.circular(22),
             boxShadow: [
               BoxShadow(
                 blurRadius: 10,
                 offset: const Offset(0, 6),
-                color: Colors.black.withOpacity(0.08),
+                color: Theme.of(context)
+                    .shadowColor
+                    .withOpacity(theme.isDark ? 0.3 : 0.08),
               ),
             ],
           ),
@@ -147,13 +159,13 @@ class _LoggedInView extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     radius: 26,
-                    backgroundColor: Colors.black.withOpacity(0.08),
+                    backgroundColor: colorScheme.surfaceVariant,
                     child: Text(
                       username.isNotEmpty ? username[0].toUpperCase() : 'U',
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w700,
-                        color: Colors.black87,
+                        color: colorScheme.onSurface,
                       ),
                     ),
                   ),
@@ -164,18 +176,18 @@ class _LoggedInView extends StatelessWidget {
                       children: [
                         Text(
                           username,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w700,
-                            color: Colors.black87,
+                            color: colorScheme.onSurface,
                           ),
                         ),
                         const SizedBox(height: 4),
                         Text(
                           email,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 13,
-                            color: Colors.black54,
+                            color: colorScheme.onSurfaceVariant,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -194,6 +206,37 @@ class _LoggedInView extends StatelessWidget {
         ),
 
         const SizedBox(height: 18),
+
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.surface,
+            borderRadius: BorderRadius.circular(18),
+            boxShadow: [
+              BoxShadow(
+                blurRadius: 10,
+                offset: const Offset(0, 6),
+                color: Colors.black.withOpacity(0.05),
+              ),
+            ],
+          ),
+          child: SwitchListTile.adaptive(
+            value: theme.isDark,
+            onChanged: (v) => context.read<ThemeProvider>().setDark(v),
+            title: const Text(
+              'Dark mode',
+              style: TextStyle(fontWeight: FontWeight.w700),
+            ),
+            subtitle: const Text('Tercih local olarak kaydedilir'),
+            secondary: Icon(
+              theme.isDark ? Icons.dark_mode : Icons.light_mode,
+              color: Theme.of(context).colorScheme.primary,
+            ),
+          ),
+        ),
+
+        const SizedBox(height: 12),
 
         SizedBox(
           width: double.infinity,
@@ -237,21 +280,20 @@ class _InfoRow extends StatelessWidget {
   final String label;
   final String value;
 
-  const _InfoRow({
-    required this.label,
-    required this.value,
-  });
+  const _InfoRow({required this.label, required this.value});
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Row(
       children: [
         Expanded(
           flex: 3,
           child: Text(
             label,
-            style: const TextStyle(
-              color: Colors.black54,
+            style: TextStyle(
+              color: colorScheme.onSurfaceVariant,
               fontWeight: FontWeight.w600,
               fontSize: 12,
             ),
@@ -262,8 +304,8 @@ class _InfoRow extends StatelessWidget {
           child: Text(
             value,
             textAlign: TextAlign.right,
-            style: const TextStyle(
-              color: Colors.black87,
+            style: TextStyle(
+              color: colorScheme.onSurface,
               fontWeight: FontWeight.w700,
               fontSize: 12,
             ),
